@@ -205,7 +205,7 @@ final class PaymentControllerTest extends WebTestCase
         $this->assertEquals($response->getStatusCode(), Response::HTTP_BAD_REQUEST);
     }
 
-    public function testCalculatePriceActionWitchNegativePrice(): void
+    public function testCalculatePriceActionWithNegativePrice(): void
     {
         $client = self::createClient();
 

@@ -38,6 +38,10 @@
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
     </listeners>
 
+    <extensions>
+        <extension class="App\Tests\PHPUnit\Hook\BypassFinalHook"/>
+    </extensions>
+
     <!-- Run `composer require symfony/panther` before enabling this extension -->
     <!--
     <extensions>

@@ -13,7 +13,6 @@ services:
 
     _instanceof:
         App\Service\Payment\Gateway\PaymentGatewayInterface:
-            public: true
             tags: [ 'app.payment.gateway' ]
 
     # makes classes in src/ available to be used as services
@@ -26,7 +25,6 @@ services:
             - '../src/Kernel.php'
 
     App\Service\Payment\Gateway\PaymentGatewayResolver:
-        public: true
         arguments:
             $gateways: !tagged_iterator app.payment.gateway
 
