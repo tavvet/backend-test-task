@@ -19,6 +19,12 @@ framework:
     php_errors:
         log: true
 
+    rate_limiter:
+        anonymous_api:
+            policy: 'sliding_window'
+            limit: 300
+            interval: '60 seconds'
+
 when@test:
     framework:
         test: true
