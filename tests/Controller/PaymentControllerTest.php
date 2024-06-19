@@ -10,7 +10,6 @@ use App\Service\Api\Exception\ApiException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
 use Symfony\Component\RateLimiter\LimiterInterface;
 use Symfony\Component\RateLimiter\RateLimit;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
