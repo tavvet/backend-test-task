@@ -10,7 +10,7 @@ PHONY: help
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-init: down copy-env build install up db-migrate db-load-fixtures console success-message ## Initialize environment
+init: down copy-env build install up db-migrate db-load-fixtures success-message console ## Initialize environment
 
 copy-env:
 	cp -n .env .env.local
