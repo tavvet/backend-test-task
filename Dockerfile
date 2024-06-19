@@ -1,6 +1,8 @@
 FROM php:8.3-cli-alpine as sio_test
-RUN apk add --no-cache git zip bash
+RUN apk add --no-cache git zip bash build-base libpq-dev
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+RUN docker-php-ext-install pgsql pdo_pgsql
 
 # Setup php app user
 ARG USER_ID=1000
