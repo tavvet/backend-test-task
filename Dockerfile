@@ -1,8 +1,10 @@
 FROM php:8.3-cli-alpine as sio_test
-RUN apk add --no-cache git zip bash build-base libpq-dev
+RUN apk add --no-cache git zip bash build-base libpq-dev autoconf linux-headers
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN docker-php-ext-install pgsql pdo_pgsql
+RUN docker-php-ext-install pgsql pdo_pgsql && pecl install xdebug && docker-php-ext-enable xdebug
+
+RUN echo "xdebug.mode = coverage" >> "$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini"
 
 # Setup php app user
 ARG USER_ID=1000
