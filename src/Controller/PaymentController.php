@@ -53,9 +53,12 @@ final class PaymentController extends AbstractController
         } catch (\Throwable $throwable) {
             $logger->error('Price calculation failed', [
                 'message' => $throwable->getMessage(),
-                'ip' => $request->getClientIp(),
                 'trace' => $throwable->getTraceAsString(),
-                'request' => $request->request->all(),
+                'request' => [
+                    'ip' => $request->getClientIp(),
+                    'data' => $request->request->all(),
+                    'content' => $request->getContent(),
+                ],
             ]);
 
             throw new ApiException('Price calculation failed', Response::HTTP_INTERNAL_SERVER_ERROR, $throwable);
@@ -82,8 +85,11 @@ final class PaymentController extends AbstractController
         }
 
         $logger->info('Start payment', [
-            'ip' => $request->getClientIp(),
-            'request' => $request->request->all(),
+            'request' => [
+                'ip' => $request->getClientIp(),
+                'data' => $request->request->all(),
+                'content' => $request->getContent(),
+            ],
         ]);
 
         try {
@@ -104,8 +110,11 @@ final class PaymentController extends AbstractController
             $logger->error('Payment failed', [
                 'message' => $exception->getMessage(),
                 'trace' => $exception->getTraceAsString(),
-                'ip' => $request->getClientIp(),
-                'request' => $request->request->all(),
+                'request' => [
+                    'ip' => $request->getClientIp(),
+                    'data' => $request->request->all(),
+                    'content' => $request->getContent(),
+                ],
             ]);
 
             throw new ApiException('Payment failed', Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -113,8 +122,11 @@ final class PaymentController extends AbstractController
             $logger->error('Payment failed', [
                 'message' => $throwable->getMessage(),
                 'trace' => $throwable->getTraceAsString(),
-                'ip' => $request->getClientIp(),
-                'request' => $request->request->all(),
+                'request' => [
+                    'ip' => $request->getClientIp(),
+                    'data' => $request->request->all(),
+                    'content' => $request->getContent(),
+                ],
             ]);
 
             throw new ApiException('Payment failed: unknown error', Response::HTTP_INTERNAL_SERVER_ERROR);
