@@ -13,6 +13,7 @@ services:
             - APP_ENV=dev
         depends_on:
             - postgres
+            - redis
     postgres:
         image: postgres:16
         volumes:
@@ -26,4 +27,5 @@ services:
             POSTGRES_HOST: ${POSTGRES_HOST}
             POSTGRES_PORT: ${POSTGRES_PORT}
             PGDATA: /var/lib/postgresql/data
-
+    redis:
+        image: redis:7.2
