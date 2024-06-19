@@ -36,12 +36,12 @@ final class PaymentController extends AbstractController
             resolver: PriceCalculationDataResolver::class,
         )] PriceCalculationData $data,
     ): JsonResponse {
-        try {
-            $limiter = $anonymousApiLimiter->create($request->getClientIp());
-            if (false === $limiter->consume()->isAccepted()) {
-                throw new TooManyRequestsHttpException();
-            }
+        $limiter = $anonymousApiLimiter->create($request->getClientIp());
+        if (false === $limiter->consume()->isAccepted()) {
+            throw new TooManyRequestsHttpException();
+        }
 
+        try {
             return $this->json([
                 'price' => $priceCalculator->calculatePrice(
                     $data->product->getPrice(),
@@ -67,6 +67,7 @@ final class PaymentController extends AbstractController
     ]
     public function purchaseAction(
         Request $request,
+        RateLimiterFactory $anonymousApiLimiter,
         PaymentProcessor $paymentProcessor,
         PriceCalculator $priceCalculator,
         #[MapRequestPayload(
@@ -75,6 +76,11 @@ final class PaymentController extends AbstractController
         )] PurchaseData $data,
         LoggerInterface $logger,
     ): JsonResponse {
+        $limiter = $anonymousApiLimiter->create($request->getClientIp());
+        if (false === $limiter->consume()->isAccepted()) {
+            throw new TooManyRequestsHttpException();
+        }
+
         $logger->info('Start payment', [
             'ip' => $request->getClientIp(),
             'request' => $request->request->all(),
