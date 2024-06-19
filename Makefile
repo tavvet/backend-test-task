@@ -39,7 +39,7 @@ install:
 	${DC_RUN} composer install
 
 db-migrate:
-	${DC_EXEC} php bin/console doctrine:migrations:migrate --dry-run
+	${DC_EXEC} php bin/console doctrine:migrations:migrate --no-interaction
 
 db-load-fixtures:
 	${DC_EXEC} php bin/console doctrine:fixtures:load --purge-with-truncate --no-interaction
