@@ -6,9 +6,14 @@ use App\Entity\Product;
 use App\Repository\CountryRepository;
 use App\Repository\CouponRepository;
 use App\Repository\ProductRepository;
+use App\Service\Api\Exception\ApiException;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
+use Symfony\Component\RateLimiter\LimiterInterface;
+use Symfony\Component\RateLimiter\RateLimit;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 
 final class PaymentControllerTest extends WebTestCase
 {
@@ -32,13 +37,10 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -65,13 +67,10 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -86,10 +85,7 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            '',
+            ...['content' => ''],
         );
 
         $response = $client->getResponse();
@@ -128,14 +124,11 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
                 'couponCode' => 'D20',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -170,13 +163,10 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -191,13 +181,10 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 'asd',
                 'taxNumber' => 'DEasdzxcqwe',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -225,13 +212,10 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -262,14 +246,11 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentMethod' => 'stripe',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -297,14 +278,11 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentMethod' => 'stripe',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -336,14 +314,11 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentMethod' => 'paypal',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -371,14 +346,11 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentMethod' => 'paypal',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -397,10 +369,7 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            'asd',
+            ...['content' => 'asd'],
         );
 
         $response = $client->getResponse();
@@ -419,13 +388,10 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'Dasdzxcqwe',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -443,14 +409,11 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'couponCode' => 'S203',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -468,13 +431,10 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 'asd',
                 'taxNumber' => 'DEasdzxcqwe',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -499,14 +459,11 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentMethod' => 'paypal',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -544,15 +501,12 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'couponCode' => 'D20',
                 'paymentMethod' => 'paypal',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -590,14 +544,11 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentMethod' => 'paypal',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
@@ -628,14 +579,11 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            [],
-            [],
-            ['CONTENT_TYPE' => 'application/json'],
-            json_encode([
+            ...['content' => json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentMethod' => 'paypal',
-            ]),
+            ])],
         );
 
         $response = $client->getResponse();
