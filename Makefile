@@ -10,7 +10,7 @@ PHONY: help
 help: ## This help.
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-init: down copy-env build install up db-migrate success-message console ## Initialize environment
+init: down copy-env build install up db-migrate db-load-fixtures console success-message ## Initialize environment
 
 copy-env:
 	cp -n .env .env.local
@@ -40,6 +40,9 @@ install:
 
 db-migrate:
 	${DC_EXEC} php bin/console doctrine:migrations:migrate --dry-run
+
+db-load-fixtures:
+	${DC_EXEC} php bin/console doctrine:fixtures:load --purge-with-truncate --no-interaction
 
 success-message:
 	@echo "You can now access the application at http://localhost:8337"
