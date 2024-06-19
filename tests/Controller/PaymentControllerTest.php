@@ -630,4 +630,42 @@ final class PaymentControllerTest extends WebTestCase
             $response->getStatusCode(),
         );
     }
+
+    public function testPurchaseActionWithRateLimit(): void
+    {
+        $client = static::createClient();
+
+        $limit = $this->createMock(RateLimit::class);
+        $limit->expects($this->once())
+            ->method('isAccepted')
+            ->willReturn(false)
+        ;
+
+        $limiter = $this->createMock(LimiterInterface::class);
+        $limiter->expects($this->once())
+            ->method('consume')
+            ->willReturn($limit)
+        ;
+
+        $factory = $this->createMock(RateLimiterFactory::class);
+        $factory->expects(self::once())
+            ->method('create')
+            ->willReturn($limiter)
+        ;
+
+        self::getContainer()->set('limiter.anonymous_api', $factory);
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionCode(Response::HTTP_TOO_MANY_REQUESTS);
+
+        $client->request(
+            Request::METHOD_POST,
+            '/purchase',
+            ...['content' => json_encode([
+                'product' => 1,
+                'taxNumber' => 'DEasdzxcqwe',
+                'paymentMethod' => 'paypal',
+            ])],
+        );
+    }
 }
