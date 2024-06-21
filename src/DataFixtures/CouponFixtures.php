@@ -23,7 +23,7 @@ class CouponFixtures extends Fixture
         foreach (range(5, 20, 5) as $fixedDiscount) {
             $manager->persist(
                 (new Coupon())
-                    ->setCode('F'.$fixedDiscount)
+                    ->setCode('D'.$fixedDiscount)
                     ->setType(CouponType::FIXED)
                     ->setValue($fixedDiscount)
             );
