@@ -31,4 +31,9 @@ final class PaymentProcessorTest extends KernelTestCase
         $this->expectException(PaymentException::class);
         $this->paymentProcessor->pay(PaymentMethod::STRIPE, 1);
     }
+
+    public function testPayZero(): void
+    {
+        $this->assertNull($this->paymentProcessor->pay(PaymentMethod::STRIPE, 0));
+    }
 }

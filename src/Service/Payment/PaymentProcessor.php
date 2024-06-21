@@ -16,6 +16,10 @@ final readonly class PaymentProcessor
      */
     public function pay(PaymentMethod $paymentMethod, float $amount): void
     {
+        if ($amount == 0) {
+            return;
+        }
+
         $gateway = $this->gatewayResolver->resolve($paymentMethod);
         $gateway->pay($amount);
     }
