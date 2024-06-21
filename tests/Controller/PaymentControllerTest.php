@@ -212,7 +212,7 @@ final class PaymentControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /*public function testCalculatePriceActionWithRateLimit(): void
+    public function testCalculatePriceActionWithRateLimit(): void
     {
         $client = static::createClient();
 
@@ -247,7 +247,7 @@ final class PaymentControllerTest extends WebTestCase
                 'taxNumber' => 'DEasdzxcqwe',
             ])],
         );
-    }*/
+    }
 
     public function testPurchaseActionWithInvalidAmountStripe(): void
     {
@@ -578,7 +578,7 @@ final class PaymentControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /*public function testPurchaseActionWithRateLimit(): void
+    public function testPurchaseActionWithRateLimit(): void
     {
         $client = static::createClient();
 
@@ -614,5 +614,5 @@ final class PaymentControllerTest extends WebTestCase
                 'paymentProcessor' => 'paypal',
             ])],
         );
-    }*/
+    }
 }
