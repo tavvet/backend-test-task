@@ -15,10 +15,6 @@ final readonly class PaypalGateway implements PaymentGatewayInterface
 
     public function pay(float $amount): void
     {
-        if ($amount < 0.01) {
-            throw new PaymentException('Invalid amount '.$amount);
-        }
-
         try {
             $this->processor->pay(ceil($amount));
         } catch (\Throwable $throwable) {

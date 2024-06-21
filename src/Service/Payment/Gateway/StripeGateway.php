@@ -15,10 +15,6 @@ final readonly class StripeGateway implements PaymentGatewayInterface
 
     public function pay(float $amount): void
     {
-        if ($amount < 0.01) {
-            throw new PaymentException('Invalid amount '.$amount);
-        }
-
         if (!$this->processor->processPayment($amount)) {
             throw new PaymentException('Failed to pay payment');
         }

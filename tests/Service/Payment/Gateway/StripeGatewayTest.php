@@ -30,18 +30,6 @@ final class StripeGatewayTest extends KernelTestCase
         $this->assertNull($this->gateway->pay(100000));
     }
 
-    public function testPayNegative(): void
-    {
-        $this->expectException(PaymentException::class);
-        $this->gateway->pay(-1);
-    }
-
-    public function testPayZero(): void
-    {
-        $this->expectException(PaymentException::class);
-        $this->gateway->pay(0);
-    }
-
     public function testPayLessThanMinAmount(): void
     {
         $this->expectException(PaymentException::class);

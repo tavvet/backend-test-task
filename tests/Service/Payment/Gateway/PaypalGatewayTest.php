@@ -30,18 +30,6 @@ final class PaypalGatewayTest extends KernelTestCase
         $this->assertNull($this->gateway->pay(0.01));
     }
 
-    public function testPayNegative(): void
-    {
-        $this->expectException(PaymentException::class);
-        $this->gateway->pay(-1);
-    }
-
-    public function testPayZero(): void
-    {
-        $this->expectException(PaymentException::class);
-        $this->gateway->pay(0);
-    }
-
     public function testPayGreaterThanMaxAmount(): void
     {
         $this->expectException(PaymentException::class);

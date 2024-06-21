@@ -2,6 +2,7 @@
 
 namespace App\Service\Payment;
 
+use App\Service\Payment\Exception\PaymentException;
 use App\Service\Payment\Gateway\PaymentGatewayResolver;
 
 final readonly class PaymentProcessor
@@ -12,12 +13,16 @@ final readonly class PaymentProcessor
     }
 
     /**
-     * @throws Exception\PaymentException
+     * @throws PaymentException
      */
     public function pay(PaymentMethod $paymentMethod, float $amount): void
     {
-        if ($amount == 0) {
+        if (0 == $amount) {
             return;
+        }
+
+        if ($amount < 0) {
+            throw new PaymentException('Invalid amount '.$amount);
         }
 
         $gateway = $this->gatewayResolver->resolve($paymentMethod);

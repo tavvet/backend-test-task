@@ -36,4 +36,14 @@ final class PaymentProcessorTest extends KernelTestCase
     {
         $this->assertNull($this->paymentProcessor->pay(PaymentMethod::STRIPE, 0));
     }
+
+    public function testPayNegative(): void
+    {
+        $amount = -1;
+
+        $this->expectException(PaymentException::class);
+        $this->expectExceptionMessage('Invalid amount '.$amount);
+
+        $this->paymentProcessor->pay(PaymentMethod::STRIPE, $amount);
+    }
 }
