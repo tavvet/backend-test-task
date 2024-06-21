@@ -12,7 +12,7 @@ final readonly class PurchaseData
     public function __construct(
         public Product $product,
         public Country $country,
-        public PaymentMethod $paymentMethod,
+        public PaymentMethod $paymentProcessor,
         public ?Coupon $coupon = null,
     ) {
     }

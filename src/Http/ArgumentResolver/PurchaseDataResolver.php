@@ -64,7 +64,7 @@ final readonly class PurchaseDataResolver implements ValueResolverInterface
                         new Assert\Regex('/[PD]{1}\d+/'),
                     ]),
                 ],
-                'paymentMethod' => new Assert\Required([
+                'paymentProcessor' => new Assert\Required([
                     new Assert\NotBlank(allowNull: false),
                     new Assert\Choice(
                         array_map(
@@ -105,7 +105,7 @@ final readonly class PurchaseDataResolver implements ValueResolverInterface
             new PurchaseData(
                 $product,
                 $country,
-                PaymentMethod::from($data['paymentMethod']),
+                PaymentMethod::from($data['paymentProcessor']),
                 $coupon,
             ),
         ];

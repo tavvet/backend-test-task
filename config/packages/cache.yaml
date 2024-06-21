@@ -20,5 +20,4 @@ framework:
         pools:
             cache.rate_limiter:
                 adapters:
-                    - cache.adapter.array
                     - cache.adapter.redis

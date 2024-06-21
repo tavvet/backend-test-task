@@ -94,7 +94,7 @@ final class PaymentController extends AbstractController
 
         try {
             $paymentProcessor->pay(
-                $data->paymentMethod,
+                $data->paymentProcessor,
                 $priceCalculator->calculatePrice(
                     $data->product->getPrice(),
                     $data->country->getTaxRate(),
