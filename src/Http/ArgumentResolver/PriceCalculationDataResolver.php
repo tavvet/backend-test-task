@@ -49,7 +49,7 @@ final readonly class PriceCalculationDataResolver implements ValueResolverInterf
                 'product' => [
                     new Assert\NotBlank(allowNull: false),
                     new Assert\Type('int'),
-                    new Assert\Range(min: 0),
+                    new Assert\Range(min: 1),
                 ],
                 'taxNumber' => [
                     new Assert\NotBlank(allowNull: false),

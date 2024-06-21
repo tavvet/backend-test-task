@@ -50,7 +50,7 @@ final readonly class PurchaseDataResolver implements ValueResolverInterface
                 'product' => new Assert\Required([
                     new Assert\NotBlank(allowNull: false),
                     new Assert\Type('int'),
-                    new Assert\Range(min: 0),
+                    new Assert\Range(min: 1),
                 ]),
                 'taxNumber' => new Assert\Required([
                     new Assert\NotBlank(allowNull: false),
