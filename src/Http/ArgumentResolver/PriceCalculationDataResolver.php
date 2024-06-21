@@ -69,7 +69,8 @@ final readonly class PriceCalculationDataResolver implements ValueResolverInterf
         if ($errors->count() > 0) {
             /** @var ConstraintViolation $error */
             $error = $errors[0];
-            throw new ApiException("{$error->getPropertyPath()}: {$error->getMessage()}", Response::HTTP_BAD_REQUEST);
+
+            throw new ApiException(preg_replace(['/\[/', '/\]/'], '', $error->getPropertyPath()).': '.$error->getMessage(), Response::HTTP_BAD_REQUEST);
         }
 
         $product = $this->productRepository->find($data['product']);
