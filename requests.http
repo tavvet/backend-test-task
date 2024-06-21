@@ -9,6 +9,23 @@ Content-Type: application/json
   "couponCode": "P10"
 }
 
+### Calculate Price with invalid product id
+POST http://127.0.0.1:8337/calculate-price
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": 0,
+  "taxNumber": "DEaaaaaaaaa",
+  "couponCode": "P10"
+}
+
+> {%
+    client.test("Bad request to calculate price", function () {
+        client.assert(response.status === 400, "Response status is not 400");
+    });
+%}
+
 ### Execute Purchase
 POST http://127.0.0.1:8337/purchase
 Accept: application/json
@@ -20,3 +37,21 @@ Content-Type: application/json
   "couponCode": "P15",
   "paymentProcessor": "paypal"
 }
+
+### Execute Purchase with invalid product id
+POST http://127.0.0.1:8337/purchase
+Accept: application/json
+Content-Type: application/json
+
+{
+  "product": -1,
+  "taxNumber": "DEaaaaaaaaa",
+  "couponCode": "P10",
+  "paymentProcessor": "paypal"
+}
+
+> {%
+    client.test("Bad request to purchase", function () {
+        client.assert(response.status === 400, "Response status is not 400");
+    });
+%}
