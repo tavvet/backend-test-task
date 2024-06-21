@@ -47,7 +47,7 @@ final class PaymentControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSame(
             $response->getContent(),
-            json_encode(['price' => 119])
+            json_encode(['code' => Response::HTTP_OK, 'price' => 119])
         );
     }
 
@@ -311,7 +311,7 @@ final class PaymentControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSame(
             $response->getContent(),
-            json_encode(['success' => true]),
+            json_encode(['code' => Response::HTTP_OK, 'success' => true]),
         );
     }
 
@@ -377,7 +377,7 @@ final class PaymentControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
         $this->assertSame(
             $response->getContent(),
-            json_encode(['success' => true]),
+            json_encode(['code' => Response::HTTP_OK ,'success' => true]),
         );
     }
 

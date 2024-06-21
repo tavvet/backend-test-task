@@ -43,6 +43,7 @@ final class PaymentController extends AbstractController
 
         try {
             return $this->json([
+                'code' => Response::HTTP_OK,
                 'price' => $priceCalculator->calculatePrice(
                     $data->product->getPrice(),
                     $data->country->getTaxRate(),
@@ -104,6 +105,7 @@ final class PaymentController extends AbstractController
             );
 
             $responseData = [
+                'code' => Response::HTTP_OK,
                 'success' => true,
             ];
         } catch (PaymentException $exception) {
