@@ -24,7 +24,11 @@ use Symfony\Component\Routing\Attribute\Route;
 final class PaymentController extends AbstractController
 {
     #[
-        Route('/calculate-price', methods: [Request::METHOD_POST]),
+        Route(
+            '/calculate-price',
+            methods: [Request::METHOD_POST],
+            condition: "request.headers.get('Content-Type') === 'application/json'",
+        ),
     ]
     public function calculatePriceAction(
         Request $request,
@@ -67,7 +71,11 @@ final class PaymentController extends AbstractController
     }
 
     #[
-        Route('/purchase', methods: [Request::METHOD_POST]),
+        Route(
+            '/purchase',
+            methods: [Request::METHOD_POST],
+            condition: "request.headers.get('Content-Type') === 'application/json'",
+        ),
     ]
     public function purchaseAction(
         Request $request,
