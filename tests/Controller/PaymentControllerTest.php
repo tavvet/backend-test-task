@@ -36,10 +36,13 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
-            ])],
+            ]),
         );
 
         $response = $client->getResponse();
@@ -66,10 +69,13 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -82,7 +88,10 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            ...['content' => ''],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            '',
         );
 
         $response = $client->getResponse();
@@ -121,11 +130,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
                 'couponCode' => 'D20',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -158,10 +170,13 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -174,10 +189,13 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 'asd',
                 'taxNumber' => 'DEasdzxcqwe',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
@@ -203,10 +221,13 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -242,10 +263,13 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/calculate-price',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
-            ])],
+            ]),
         );
     }
 
@@ -269,11 +293,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentProcessor' => 'stripe',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -299,11 +326,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentProcessor' => 'stripe',
-            ])],
+            ]),
         );
 
         $response = $client->getResponse();
@@ -335,11 +365,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentProcessor' => 'paypal',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -365,11 +398,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentProcessor' => 'paypal',
-            ])],
+            ]),
         );
 
         $response = $client->getResponse();
@@ -388,7 +424,10 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => 'asd'],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+           'asd',
         );
 
         $response = $client->getResponse();
@@ -407,10 +446,13 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'Dasdzxcqwe',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
@@ -423,11 +465,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'couponCode' => 'S203',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
@@ -440,10 +485,13 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 'asd',
                 'taxNumber' => 'DEasdzxcqwe',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_BAD_REQUEST);
@@ -463,11 +511,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentProcessor' => 'paypal',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -500,12 +551,15 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'couponCode' => 'D20',
                 'paymentProcessor' => 'paypal',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -538,11 +592,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentProcessor' => 'paypal',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_NOT_FOUND);
@@ -568,11 +625,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 10,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentProcessor' => 'paypal',
-            ])],
+            ]),
         );
 
         $this->assertResponseStatusCodeSame(Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -608,11 +668,14 @@ final class PaymentControllerTest extends WebTestCase
         $client->request(
             Request::METHOD_POST,
             '/purchase',
-            ...['content' => json_encode([
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            json_encode([
                 'product' => 1,
                 'taxNumber' => 'DEasdzxcqwe',
                 'paymentProcessor' => 'paypal',
-            ])],
+            ]),
         );
     }
 }
